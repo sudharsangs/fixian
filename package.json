@@ -4,7 +4,11 @@
   "description": "Final sem project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -15,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/sudharsangs/shopera/issues"
   },
-  "homepage": "https://github.com/sudharsangs/shopera#readme"
+  "homepage": "https://github.com/sudharsangs/shopera#readme",
+  "dependencies": {
+    "concurrently": "^5.0.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }

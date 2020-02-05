@@ -22,7 +22,8 @@
   "homepage": "https://github.com/sudharsangs/shopera#readme",
   "dependencies": {
     "concurrently": "^5.0.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "reactstrap": "^8.4.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

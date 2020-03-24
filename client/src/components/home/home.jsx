@@ -6,8 +6,8 @@ export default function Home(){
     return(
         <div className="wrapper">
             <h1>Fixian</h1>
-            <div>
-                
+            <div className="element">
+                <img src=""/>
             </div>
         </div>
     )

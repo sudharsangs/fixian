@@ -1,25 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+//import Mapss from './components/maps';
+import Signup from './components/signup';
+import Bg from './assets/bg.jpg';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+        <Navbar />
+          <br/>
+              <Route path="/" exact component={Home} />
+              <Route path="/mechs" exact component={LivePrice} />
+              <Route path="/signup" exact component={SignUp} />
+              <Route path="/admin" exact component={Admin} />
+              <Route path="/login" exact component={LogIn} />
+      </Router>
+
+    
   );
 }
 

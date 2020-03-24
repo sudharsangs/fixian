@@ -1,0 +1,9 @@
+body {
+    background-image: url(../assets/bg.jpg) no-repeat fixed center;
+}
+
+.signup {
+    text-align: center;
+    padding-top: 8%;
+    z-index: 999;
+}

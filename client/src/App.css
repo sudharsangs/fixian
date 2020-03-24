@@ -4,6 +4,14 @@ body {
   height: 100vh;
 }
 
+.container {
+  background-image: url(./assets/bg3.jpg)   !important;
+  background-size: cover !important; 
+  background-position: center !important;
+  height: 100vh !important;
+  width: 100vw !important;
+}
+
 #root {
   height: 100%;
 }

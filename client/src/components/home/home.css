@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Frijole&display=swap');
+h1 {
+    margin: auto 0;
+    font-family: 'Frijole', cursive;
+    color: white;
+    font-size: 10vw  !important;
+}
+
+.wrapper {
+    text-align: center;
+}

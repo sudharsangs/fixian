@@ -1,23 +1,17 @@
 import React from 'react';
 import './App.css';
 //import Mapss from './components/maps';
-import Signup from './components/signup';
-import Bg from './assets/bg.jpg';
+//import Signup from './components/signup';
+import Home from './components/home/home';
+import Login from './components/login';
 
 function App() {
-  return (
-    <Router>
-        <Navbar />
-          <br/>
-              <Route path="/" exact component={Home} />
-              <Route path="/mechs" exact component={LivePrice} />
-              <Route path="/signup" exact component={SignUp} />
-              <Route path="/admin" exact component={Admin} />
-              <Route path="/login" exact component={LogIn} />
-      </Router>
-
+  return(
+    <div className="container">
+       <Home/>
+    </div>
     
-  );
+  )
 }
 
 export default App;

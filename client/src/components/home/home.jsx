@@ -10,7 +10,6 @@ function Home() {
       <h1>Fixian</h1>
       <div className={styles.wrapper}>
         <User className={`${styles.user} ${styles.card}`} />
-        {"             "}
         <Garage className={`${styles.garage} ${styles.card}`} />
       </div>
     </div>

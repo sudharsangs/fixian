@@ -1,15 +1,14 @@
-import React from 'react';
-import './App.css';
-import Home from './components/home/home';
-
+import React from "react";
+import { Router, Switch, Route } from "react-router-dom";
+import "./App.css";
+import Home from "./components/home/home";
 
 function App() {
-  return(
+  return (
     <div className="container">
-       <Home/>
+      <Home />
     </div>
-    
-  )
+  );
 }
 
 export default App;

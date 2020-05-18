@@ -9,3 +9,8 @@ h1 {
 .wrapper {
     text-align: center;
 }
+
+.customer {
+    width: 12rem;
+    height: 10rem;
+}

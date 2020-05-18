@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Pangolin&display=swap");
+.customer {
+  width: 30rem;
+  height: 30rem;
+}
+
+.wrapper {
+  background-image: linear-gradient(to top, #9795f0 0%, #fbc8d4 100%);
+  border-radius: 30px;
+  width: 600px;
+  height: 600px;
+  padding: 40px;
+  margin: 50px;
+}
+
+.usrBtn {
+  background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
+  border: none;
+  border-radius: 20px;
+  color: aliceblue;
+  height: 4rem;
+  font-size: 25px;
+  font-family: "Pangolin", cursive;
+}

@@ -1,22 +1,20 @@
-import React from 'react';
+import React from "react";
 //import {Link,  withRouter} from 'react-router-dom';
-import customer from '../../assets/customer.png';
-import './home.css';
+import User from "../user/user";
+import Garage from "../garage/garage";
+import styles from "./home.module.css";
 
-
- function Home(){
-    return(
-        <div className="wrapper">
-            <h1>Fixian</h1>
-                
-                     <div className="element">
-                       <img src={customer} className="customer"/>
-                     </div>
-              
-            
-            
-        </div>
-    )
+function Home() {
+  return (
+    <div className={styles.home}>
+      <h1>Fixian</h1>
+      <div className={styles.wrapper}>
+        <User className={`${styles.user} ${styles.card}`} />
+        {"             "}
+        <Garage className={`${styles.garage} ${styles.card}`} />
+      </div>
+    </div>
+  );
 }
 
 export default Home;

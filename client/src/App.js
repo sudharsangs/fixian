@@ -1,14 +1,10 @@
 import React from "react";
-import { Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import Home from "./components/home/home";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  return (
-    <div className="container">
-      <Home />
-    </div>
-  );
+  return <div className="container"></div>;
 }
 
 export default App;

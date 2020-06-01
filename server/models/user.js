@@ -11,11 +11,6 @@ const userSchema = new Schema(
       maxlength: 32,
       trim: true,
     },
-    lastname: {
-      type: String,
-      maxlength: 32,
-      trim: true,
-    },
     email: {
       type: String,
       trim: true,
@@ -34,10 +29,6 @@ const userSchema = new Schema(
     role: {
       type: Number,
       default: 0,
-    },
-    purchases: {
-      type: Array,
-      default: [],
     },
   },
   { timestamps: true }

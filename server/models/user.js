@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const crypto = require("crypto");
-const uuidv1 = require("uuid/v1");
+const { v4: uuidv4 } = require("uuid");
 
 const userSchema = new Schema(
   {
@@ -16,10 +16,6 @@ const userSchema = new Schema(
       trim: true,
       required: true,
       unique: true,
-    },
-    userinfo: {
-      type: String,
-      trim: true,
     },
     encry_password: {
       type: String,

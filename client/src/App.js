@@ -1,10 +1,13 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Routes from "./Routes";
+import UserSignUp from "./user/Signup";
 
-function App() {
-  return <div className="container"></div>;
-}
+const App = () => {
+  return (
+    <div>
+      <UserSignUp />
+    </div>
+  );
+};
 
 export default App;

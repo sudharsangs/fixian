@@ -1,7 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
+
 .imgClass {
   height: 600px;
   width: 600px;
   padding: 50px;
+}
+
+h3 {
+  font-family: "Indie Flower", cursive;
 }
 
 .wrapper {

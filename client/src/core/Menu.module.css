@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap");
+
+.headFont {
+  font-family: "Black Ops One", cursive !important;
+  font-size: 2rem;
+}
+
+.sideFont {
+  font-family: "Covered By Your Grace", cursive;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

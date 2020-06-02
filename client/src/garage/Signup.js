@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +12,7 @@ import EmojiTransportationIcon from "@material-ui/icons/EmojiTransportation";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import { signup } from "../auth/helper";
 
 function Copyright() {
   return (
@@ -63,6 +64,41 @@ const useStyles = makeStyles((theme) => ({
 export default function GarageSignUp() {
   const classes = useStyles();
 
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+    error: "",
+    success: false,
+  });
+
+  const { name, email, password, error, success } = values;
+
+  const handleChange = (name) => (event) => {
+    setValues({ ...values, error: false, [name]: event.target.value });
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setValues({ ...values, error: false });
+    signup({ name, email, password })
+      .then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, success: false });
+        } else {
+          setValues({
+            ...values,
+            name: "",
+            email: "",
+            password: "",
+            error: "",
+            success: true,
+          });
+        }
+      })
+      .catch(console.log("Error in signup"));
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -85,6 +121,7 @@ export default function GarageSignUp() {
                   required
                   fullWidth
                   id="firstName"
+                  onChange={handleChange("firstName")}
                   label="First Name"
                   autoFocus
                 />
@@ -97,6 +134,7 @@ export default function GarageSignUp() {
                   id="lastName"
                   label="Last Name"
                   name="lastName"
+                  onChange={handleChange("lastName")}
                   autoComplete="lname"
                 />
               </Grid>
@@ -107,6 +145,7 @@ export default function GarageSignUp() {
                   fullWidth
                   id="email"
                   label="Email Address"
+                  onChange={handleChange("email")}
                   name="email"
                   autoComplete="email"
                 />
@@ -119,6 +158,7 @@ export default function GarageSignUp() {
                   name="password"
                   label="Password"
                   type="password"
+                  onChange={handleChange("password")}
                   id="password"
                   autoComplete="current-password"
                 />
@@ -138,6 +178,7 @@ export default function GarageSignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={onSubmit}
             >
               Sign Up
             </Button>
@@ -148,6 +189,7 @@ export default function GarageSignUp() {
                 </Link>
               </Grid>
             </Grid>
+            <p className="text-light text-center">{JSON.stringify(values)}</p>
           </form>
         </div>
 

@@ -3,13 +3,12 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const multer = require("multer");
-const AWS = require("aws-sdk");
 const uuid = require("uuid/v1");
 const keys = require("../config/keys");
 const {
   normalizeErrors,
   confirmOwner,
-  checkFileType
+  checkFileType,
 } = require("./../utils/helpers");
 const { auth, jsonParseBody } = require("./../middleware/index");
 
@@ -19,14 +18,14 @@ const Review = require("./../models/Review");
 const uploadService = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10000000 }, //file size limit of 10mb
-  fileFilter: function(req, file, cb) {
+  fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
-  }
+  },
 }).single("file");
 
 const s3 = new AWS.S3({
   accessKeyId: keys.accessKeyId,
-  secretAccessKey: keys.secretAccessKey
+  secretAccessKey: keys.secretAccessKey,
 });
 
 // @route   GET api/stores/
@@ -49,7 +48,7 @@ router.get("/", (req, res) => {
 
   const countPromise = Store.countDocuments(); //Find total number of stores in db
 
-  Promise.all([storesPromise, countPromise]).then(values => {
+  Promise.all([storesPromise, countPromise]).then((values) => {
     const [stores, count] = values;
     const pages = Math.ceil(count / limit);
     if (!stores.length && skip) {
@@ -75,7 +74,7 @@ router.get("/page/:page", (req, res) => {
 
   const countPromise = Store.countDocuments(); //Find total number of stores in db
 
-  Promise.all([storesPromise, countPromise]).then(values => {
+  Promise.all([storesPromise, countPromise]).then((values) => {
     const [stores, count] = values;
     const pages = Math.ceil(count / limit);
     if (!stores.length && skip) {
@@ -100,27 +99,27 @@ router.post("/add", auth, uploadService, jsonParseBody, (req, res) => {
     const { mimetype } = req.file;
     newStore
       .save()
-      .then(store => {
+      .then((store) => {
         s3.putObject(
           {
             Body: req.file.buffer,
             Bucket: "blogbucket-dev-kevinrsd",
             ContentType: `${mimetype}`,
-            Key: key
+            Key: key,
           },
           (err, data) => {
             res.json(store);
           }
         );
       })
-      .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+      .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
   } else {
     newStore
       .save()
-      .then(store => {
+      .then((store) => {
         res.json(store);
       })
-      .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+      .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
   }
 });
 
@@ -129,10 +128,10 @@ router.post("/add", auth, uploadService, jsonParseBody, (req, res) => {
 // @access  Private
 router.post("/id/:id/edit", auth, uploadService, jsonParseBody, (req, res) => {
   Store.findOne({ _id: req.params.id })
-    .then(store => {
+    .then((store) => {
       if (!confirmOwner(store, req.user)) {
         return res.status(400).json({
-          errors: [{ detail: "You must have created this store to edit it!" }]
+          errors: [{ detail: "You must have created this store to edit it!" }],
         });
       }
       let updates = req.body;
@@ -144,7 +143,7 @@ router.post("/id/:id/edit", auth, uploadService, jsonParseBody, (req, res) => {
         s3.deleteObject(
           {
             Bucket: "blogbucket-dev-kevinrsd",
-            Key: oldImageUrl
+            Key: oldImageUrl,
           },
           (err, data) => {}
         );
@@ -154,21 +153,21 @@ router.post("/id/:id/edit", auth, uploadService, jsonParseBody, (req, res) => {
             Body: req.file.buffer,
             Bucket: "blogbucket-dev-kevinrsd",
             ContentType: req.file.mimetype,
-            Key: key
+            Key: key,
           },
           (err, data) => {}
         );
       }
       return Store.findOneAndUpdate({ _id: req.params.id }, updates, {
         new: true,
-        runValidators: true
+        runValidators: true,
       })
         .exec()
-        .then(store => {
+        .then((store) => {
           res.json(store);
         });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   GET api/stores/:id/
@@ -178,10 +177,10 @@ router.get("/id/:id", (req, res) => {
   Store.findOne({ _id: req.params.id })
     .populate("author", "_id name email")
     .exec()
-    .then(store => {
+    .then((store) => {
       res.json(store);
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   GET api/stores/slug/:slug
@@ -192,10 +191,10 @@ router.get("/slug/:slug", (req, res) => {
     .populate("author", "_id name email")
     .populate("reviews")
     .exec()
-    .then(store => {
+    .then((store) => {
       res.json(store);
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   GET api/stores/tags
@@ -203,10 +202,10 @@ router.get("/slug/:slug", (req, res) => {
 // @access  Public
 router.get("/tags", (req, res) => {
   Store.getTagsList()
-    .then(tags => {
+    .then((tags) => {
       res.json(tags);
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   GET api/stores/tags/:tag
@@ -214,10 +213,10 @@ router.get("/tags", (req, res) => {
 // @access  Public
 router.get("/tags/:tag", (req, res) => {
   Store.find({ tags: req.params.tag })
-    .then(stores => {
+    .then((stores) => {
       res.json({ stores });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   GET api/stores/search?q=cofee
@@ -227,31 +226,31 @@ router.get("/search", (req, res) => {
   Store.find(
     {
       $text: {
-        $search: req.query.q
-      }
+        $search: req.query.q,
+      },
     },
     {
       //Here we are adding a new field called score
       //Docs with more instances of coffee get higher score
-      score: { $meta: "textScore" }
+      score: { $meta: "textScore" },
     }
   )
     .sort({
-      score: { $meta: "textScore" }
+      score: { $meta: "textScore" },
     })
     .limit(100)
     .exec()
-    .then(stores => {
+    .then((stores) => {
       res.json({ stores });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   POST api/stores/:id/heart
 // @desc    Heart or Unheart a store
 // @access  Private
 router.post("/:id/heart", auth, (req, res) => {
-  const hearts = req.user.hearts.map(obj => {
+  const hearts = req.user.hearts.map((obj) => {
     return obj.toString();
   });
   const operator = hearts.includes(req.params.id) ? "$pull" : "$addToSet";
@@ -260,10 +259,10 @@ router.post("/:id/heart", auth, (req, res) => {
     { [operator]: { hearts: req.params.id } }, //use [] for js vars in mongo query
     { new: true } //return updated user
   )
-    .then(user => {
+    .then((user) => {
       res.json({ success: true });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   POST api/stores/hearts
@@ -271,12 +270,12 @@ router.post("/:id/heart", auth, (req, res) => {
 // @access  Private
 router.get("/hearts", auth, (req, res) => {
   Store.find({
-    _id: { $in: req.user.hearts }
+    _id: { $in: req.user.hearts },
   })
-    .then(stores => {
+    .then((stores) => {
       res.json({ stores });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   POST api/stores/add_review/id
@@ -290,17 +289,17 @@ router.post("/add_review/:id", auth, (req, res) => {
     .then(() => {
       res.json({ success: true });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   GET api/stores/top
 // @desc    Add review to a store
 router.get("/top", (req, res) => {
   Store.getTopStores()
-    .then(stores => {
+    .then((stores) => {
       res.json({ stores });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 module.exports = router;

@@ -2,24 +2,24 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
-const keys = require("./keys");
+require("dotenv").config({ path: __dirname + "/.env" });
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = keys.secretOrKey;
+opts.secretOrPrivateKey = process.env.SECRET;
 
-module.exports = passport => {
+module.exports = (passport) => {
   //THis code runs with succesful login
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
       User.findById(jwt_payload.id)
-        .then(user => {
+        .then((user) => {
           if (user) {
             return done(null, user);
           }
           return done(null, false);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     })

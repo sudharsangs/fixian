@@ -1,4 +1,5 @@
 const User = require("./../models/User");
+const { use } = require("passport");
 
 let auth = (req, res, next) => {
   let token = req.cookies.w_auth;
@@ -6,9 +7,8 @@ let auth = (req, res, next) => {
     if (err) throw err;
     if (!user)
       return res.status(400).json({
-        errors: [{ detail: "Not authorized" }]
+        errors: [{ detail: "Not authorized" }],
       });
-
     req.token = token;
     req.user = user;
     next();
@@ -27,7 +27,7 @@ let jsonParseBody = (req, res, next) => {
 let confirmedPasswords = (req, res, next) => {
   if (req.body.password !== req.body.passwordConfirm) {
     return res.status(400).json({
-      errors: [{ detail: "Passwords do not match!" }]
+      errors: [{ detail: "Passwords do not match!" }],
     });
   }
   next();

@@ -17,72 +17,72 @@ const { sendEmail } = require("./../utils/mail/index");
 // @access  Public
 router.post("/register", confirmedPasswords, (req, res) => {
   User.findOne({ email: req.body.email })
-    .then(user => {
+    .then((user) => {
       const avatar = gravatar.url(req.body.email, {
         s: "200", // Size
         r: "pg", // Rating
-        d: "mm" // Default
+        d: "mm", // Default
       });
 
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
         avatar,
-        password: req.body.password
+        password: req.body.password,
       });
 
       return newUser.save();
     })
-    .then(user => {
+    .then((user) => {
       res.json(user);
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   GET api/users/login
 // @desc    Login User / Returning JWT token
 // @access  Public
+
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email })
-    .then(user => {
+    .then((user) => {
       //Check for User
       if (!user) {
         return res.status(422).json({
-          errors: [{ detail: "Incorrect Email or Password" }]
+          errors: [{ detail: "Incorrect Email or Password" }],
         });
       }
       //Check password
-      user.comparePassword(req.body.password, (err, isMatch) => {
+      user.comparePassword(password, (err, isMatch) => {
         if (!isMatch)
           return res.status(400).json({
-            errors: [{ detail: "Incorrect Email or Password" }]
+            errors: [{ detail: "Incorrect Email or Password" }],
           });
 
         user.generateToken((err, user) => {
-          if (err)
+          if (err) {
+            console.log(err);
             return res.status(422).json({ errors: normalizeErrors(err) });
-          res
-            .cookie("w_auth", user.token)
-            .status(200)
-            .json({
-              loginSuccess: true
-            });
+          }
+          res.cookie("w_auth", user.token).status(200).json({
+            loginSuccess: true,
+          });
         });
       });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // ROUTE /api/users/logout
 router.get("/logout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" })
-    .then(doc => {
+    .then((doc) => {
       return res.send({
-        success: true
+        success: true,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.status(422).json({ errors: normalizeErrors(err) });
     });
 });
@@ -92,14 +92,14 @@ router.post("/update_profile", auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     {
-      $set: req.body
+      $set: req.body,
     },
     { new: true }
   )
-    .then(doc => {
+    .then((doc) => {
       res.json({ success: true });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // ROUTE /api/users/auth
@@ -110,7 +110,7 @@ router.get("/auth", auth, (req, res) => {
     name: req.user.name,
     avatar: req.user.avatar,
     id: req.user._id,
-    hearts: req.user.hearts
+    hearts: req.user.hearts,
   });
 });
 
@@ -118,7 +118,7 @@ router.get("/auth", auth, (req, res) => {
 // Generate reset token on User model and email it to user
 router.post("/forgot_password", (req, res) => {
   User.findOne({ email: req.body.email })
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return res.json({ success: true, email: false });
       }
@@ -128,7 +128,7 @@ router.post("/forgot_password", (req, res) => {
         return res.json({ success: true });
       });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // ROUTE /api/users/reset_password
@@ -138,17 +138,17 @@ router.post("/reset_password", confirmedPasswords, (req, res) => {
   User.findOne({
     resetToken: req.body.resetToken,
     resetTokenExp: {
-      $gte: now
-    }
+      $gte: now,
+    },
   })
-    .then(user => {
+    .then((user) => {
       if (!user) {
         res.status(422).json({
           errors: [
             {
-              detail: "Password Reset is invalid or has expired"
-            }
-          ]
+              detail: "Password Reset is invalid or has expired",
+            },
+          ],
         });
         return;
       }
@@ -157,11 +157,11 @@ router.post("/reset_password", confirmedPasswords, (req, res) => {
       user.resetTokenExp = "";
       user.save().then(() => {
         return res.status(200).json({
-          success: true
+          success: true,
         });
       });
     })
-    .catch(err => res.status(422).json({ errors: normalizeErrors(err) }));
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 module.exports = router;

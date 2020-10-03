@@ -1,6 +1,7 @@
 const mailer = require("nodemailer");
 const { resetPass } = require("./resetpass_template");
-const { EMAIL_PASS } = require("./../../config/keys");
+require("dotenv").config({ path: __dirname + "/.env" });
+const EMAIL_PASS = process.env.EMAIL_PASS;
 
 const getEmailData = (to, name, type, actionData) => {
   let data = null;
@@ -8,10 +9,10 @@ const getEmailData = (to, name, type, actionData) => {
   switch (type) {
     case "reset_password":
       data = {
-        from: "Kevin <kevintheviet@gmail.com>",
+        from: "Kevin <g.s.sudharsan99@gmail.com>",
         to,
         subject: `Hey ${name}, reset your password`,
-        html: resetPass(actionData)
+        html: resetPass(actionData),
       };
       break;
     default:
@@ -22,16 +23,16 @@ const getEmailData = (to, name, type, actionData) => {
 
 const sendEmail = (to, name, type, actionData = null) => {
   const smtpTransport = mailer.createTransport({
-    service: "Gmail",
+    service: "smtp.gmail.com",
     auth: {
-      user: "kevintheviet@gmail.com",
-      pass: EMAIL_PASS
-    }
+      user: "g.s.sudharsan99@gmail.com",
+      pass: EMAIL_PASS,
+    },
   });
 
   const mail = getEmailData(to, name, type, actionData);
 
-  smtpTransport.sendMail(mail, function(error, response) {
+  smtpTransport.sendMail(mail, function (error, response) {
     if (error) {
       console.log(error);
     } else {

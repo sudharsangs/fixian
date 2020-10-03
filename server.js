@@ -8,29 +8,23 @@ const path = require("path");
 const users = require("./routes/users");
 // const profile = require("./routes/api/profile");
 const stores = require("./routes/stores");
-
 const app = express();
+require("dotenv").config({ path: __dirname + "/.env" });
 
 // Body Parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// DB Config
-const db = require("./config/keys").mongoURI;
-
 //Connect to Mongoose
 mongoose.Promise = global.Promise;
+
 mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => {
-    const fakeDb = new FakeDb();
-    // fakeDb.seedDb();
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
-  .catch(err => {
+  .catch((err) => {
     console.log("mongoose", err);
   });
 
@@ -50,7 +44,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use((error, request, response, next) => {
   response.status(500).json({
-    errors: [{ detail: error }]
+    errors: [{ detail: error }],
   });
 });
 

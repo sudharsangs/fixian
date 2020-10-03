@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
-const passport = require("passport");
 const multer = require("multer");
 const uuid = require("uuid/v1");
 const keys = require("../config/keys");
+const { Storage } = require("@google-cloud/storage");
 const {
   normalizeErrors,
   confirmOwner,
@@ -15,6 +14,22 @@ const { auth, jsonParseBody } = require("./../middleware/index");
 const Store = require("./../models/Store");
 const Review = require("./../models/Review");
 
+const storage = new Storage({
+  keyFilename: keys.FIREBASE_KEY,
+});
+
+let bucketName = keys.FIREBASE_BUCKET_NAME;
+
+/*
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+*/
+
 const uploadService = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10000000 }, //file size limit of 10mb
@@ -22,11 +37,6 @@ const uploadService = multer({
     checkFileType(file, cb);
   },
 }).single("file");
-
-const s3 = new AWS.S3({
-  accessKeyId: keys.accessKeyId,
-  secretAccessKey: keys.secretAccessKey,
-});
 
 // @route   GET api/stores/
 // @desc    Get all stores
@@ -100,7 +110,13 @@ router.post("/add", auth, uploadService, jsonParseBody, (req, res) => {
     newStore
       .save()
       .then((store) => {
-       //Upload file -Firerbase
+        //Upload file -Firebase
+        storage.bucket(bucketName).upload(req.file.buffer, {
+          gzip: true,
+          metadata: {
+            cacheControl: "public, max-age=31536000",
+          },
+        });
       })
       .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
   } else {
@@ -130,9 +146,14 @@ router.post("/id/:id/edit", auth, uploadService, jsonParseBody, (req, res) => {
         const oldImageUrl = store.photo;
         updates.photo = key;
         //Delete old image
-        
+
         //Upload new image from user
-       
+        storage.bucket(bucketName).upload(req.file.buffer, {
+          gzip: true,
+          metadata: {
+            cacheControl: "public, max-age=31536000",
+          },
+        });
       }
       return Store.findOneAndUpdate({ _id: req.params.id }, updates, {
         new: true,

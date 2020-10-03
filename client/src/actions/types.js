@@ -1,0 +1,10 @@
+export const GET_STORES = "GET_STORES";
+export const GET_STORE = "GET_STORE";
+export const CLEAR_STORE = "CLEAR_STORE";
+export const STORE_LOADING = "STORE_LOADING";
+export const GET_TAGS = "GET_TAGS";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const UPDATE_PROFILE = "UPDATE_PROFILE";
+export const AUTH_USER = "AUTH_USER";
+export const LOGOUT_USER = "LOGOUT_USER";

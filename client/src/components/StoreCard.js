@@ -4,14 +4,14 @@ import { heartStore } from "./../actions/userActions";
 import { auth } from "./../actions/authActions";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-import { AmazonS3Url } from "./../utility/helpers";
+import { FirebaseUrl } from "./../utility/helpers";
 import placeHolderImg from "./../assets/images/store.jpg";
 
 class StoreCard extends Component {
-  onHeartClick = id => {
+  onHeartClick = (id) => {
     heartStore(id)
       .then(() => this.props.auth())
-      .catch(e => {});
+      .catch((e) => {});
   };
   render() {
     // Display placeholder img if invalid link
@@ -19,7 +19,7 @@ class StoreCard extends Component {
       <img
         src={
           this.props.storeData.photo
-            ? `${AmazonS3Url}${this.props.storeData.photo}`
+            ? `${FirebaseUrl}${this.props.storeData.photo}`
             : placeHolderImg
         }
         className="card-img-top"
@@ -37,10 +37,7 @@ class StoreCard extends Component {
               <Link to={`/store/${storeData.slug}`}>{storeData.name}</Link>
             </h4>
             <p className="card-text">
-              {storeData.description
-                .split(" ")
-                .slice(0, 25)
-                .join(" ")}
+              {storeData.description.split(" ").slice(0, 25).join(" ")}
             </p>
           </div>
           <div className="position-absolute d-flex justify-content-around w-100 text-white mt-2">
@@ -57,7 +54,7 @@ class StoreCard extends Component {
                 ) : null}
                 <i
                   className={classnames("fas fa-heart fa-lg", {
-                    "text-danger": userData.hearts.includes(storeData._id)
+                    "text-danger": userData.hearts.includes(storeData._id),
                   })}
                   style={{ cursor: "pointer" }}
                   onClick={() => this.onHeartClick(storeData._id)}
@@ -75,13 +72,10 @@ class StoreCard extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { auth }
-)(StoreCard);
+export default connect(mapStateToProps, { auth })(StoreCard);

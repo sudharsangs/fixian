@@ -1,7 +1,6 @@
 export const choices = [
-  "Wifi",
-  "Open Late",
-  "Family Friendly",
-  "Vega",
-  "Licensed"
+  "Express Service",
+  "Pick Up and Drop",
+  "Two Wheeler",
+  "Four Wheeler",
 ];

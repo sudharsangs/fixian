@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AmazonS3Url } from "./../utility/helpers";
+import { FirebaseUrl } from "./../utility/helpers";
 import TextFieldGroup from "./../components/common/TextFieldGroup";
 import TextAreaFieldGroup from "./../components/common/TextAreaFieldGroup";
 import FileFieldGroup from "./../components/common/FileFieldGroup";
@@ -15,24 +15,24 @@ class StoreForm extends Component {
     location: this.props.store
       ? this.props.store.location
       : { address: "", coordinates: ["", ""] },
-    file: null
+    file: null,
   };
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.state);
   };
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
-  onAddressChange = e => {
+  onAddressChange = (e) => {
     const copyState = {
       ...this.state,
       location: {
         ...this.state.location,
-        coordinates: [...this.state.location.coordinates]
-      }
+        coordinates: [...this.state.location.coordinates],
+      },
     };
 
     const google = window.google; //reactjs use a linting rule that forbids unknown global variables.
@@ -49,45 +49,45 @@ class StoreForm extends Component {
 
     copyState.location.address = e.target.value;
     this.setState({
-      location: copyState.location
+      location: copyState.location,
     });
   };
-  onLngChange = e => {
+  onLngChange = (e) => {
     const copyState = {
       ...this.state,
       location: {
         ...this.state.location,
-        coordinates: [...this.state.location.coordinates]
-      }
+        coordinates: [...this.state.location.coordinates],
+      },
     };
     copyState.location.coordinates[0] = e.target.value;
     this.setState({ location: copyState.location });
   };
-  onLatChange = e => {
+  onLatChange = (e) => {
     const copyState = {
       ...this.state,
       location: {
         ...this.state.location,
-        coordinates: [...this.state.location.coordinates]
-      }
+        coordinates: [...this.state.location.coordinates],
+      },
     };
     copyState.location.coordinates[1] = e.target.value;
     this.setState({ location: copyState.location });
   };
-  onCheck = e => {
+  onCheck = (e) => {
     let tags = [...this.state.tags];
     if (e.target.checked) {
       tags.push(e.target.value);
     } else {
-      tags = tags.filter(tag => tag !== e.target.value);
+      tags = tags.filter((tag) => tag !== e.target.value);
     }
     this.setState({ tags });
   };
-  onFileChange = e => {
+  onFileChange = (e) => {
     this.setState({ file: e.target.files[0] });
   };
   render() {
-    const tagChoices = choices.map(choice => {
+    const tagChoices = choices.map((choice) => {
       return (
         <div className="form-check form-check-inline" key={choice}>
           <input
@@ -102,14 +102,13 @@ class StoreForm extends Component {
         </div>
       );
     });
-    const storePhoto = this.props.store &&
-      this.props.store.photo && (
-        <img
-          src={`${AmazonS3Url}${this.props.store.photo}`}
-          alt={this.props.store.name}
-          width="200"
-        />
-      );
+    const storePhoto = this.props.store && this.props.store.photo && (
+      <img
+        src={`${FirebaseUrl}${this.props.store.photo}`}
+        alt={this.props.store.name}
+        width="200"
+      />
+    );
 
     return (
       <form onSubmit={this.onSubmit}>

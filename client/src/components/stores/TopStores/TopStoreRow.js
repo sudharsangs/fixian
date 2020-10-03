@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import placeHolderImg from "./../../../assets/images/store.jpg";
-import { AmazonS3Url } from "./../../../utility/helpers";
+import { FirebaseUrl } from "./../../../utility/helpers";
 
 const TopStoreRow = ({ store, index }) => {
   return (
@@ -9,7 +9,7 @@ const TopStoreRow = ({ store, index }) => {
       <td>
         <Link to={`/store/${store.slug}`}>
           <img
-            src={store.photo ? `${AmazonS3Url}${store.photo}` : placeHolderImg}
+            src={store.photo ? `${FirebaseUrl}${store.photo}` : placeHolderImg}
             alt={store.name}
             style={{ width: "200px" }}
           />

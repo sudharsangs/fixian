@@ -7,7 +7,7 @@ import StoreReviewForm from "./StoreReviewForm/StoreReviewForm";
 import StoreReviewCard from "./StoreReviewCard";
 import { getStoreBySlug } from "./../../actions/storeActions";
 import placeHolderImg from "./../../assets/images/store.jpg";
-import { AmazonS3Url } from "./../../utility/helpers";
+import { FirebaseUrl } from "./../../utility/helpers";
 
 class Store extends Component {
   componentDidMount() {
@@ -21,14 +21,14 @@ class Store extends Component {
     if (store) {
       const img = (
         <img
-          src={store.photo ? `${AmazonS3Url}${store.photo}` : placeHolderImg}
+          src={store.photo ? `${FirebaseUrl}${store.photo}` : placeHolderImg}
           className="img-fluid d-block mx-auto"
           alt=""
         />
       );
-      const reviewAuthorIds = store.reviews.map(review => review.author._id);
+      const reviewAuthorIds = store.reviews.map((review) => review.author._id);
       const showReviewForm = isAuth && !reviewAuthorIds.includes(id);
-      const tags = store.tags.map(tag => {
+      const tags = store.tags.map((tag) => {
         return (
           <span key={tag}>
             <Link className="mx-3 btn btn-warning" to={`/tags/${tag}`}>
@@ -59,7 +59,7 @@ class Store extends Component {
             />
           ) : null}
 
-          {store.reviews.map(r => {
+          {store.reviews.map((r) => {
             return <StoreReviewCard review={r} key={r._id} />;
           })}
         </div>
@@ -69,14 +69,11 @@ class Store extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     store: state.store,
-    user: state.user
+    user: state.user,
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { getStoreBySlug }
-)(Store);
+export default connect(mapStateToProps, { getStoreBySlug })(Store);

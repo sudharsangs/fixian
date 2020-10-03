@@ -100,17 +100,7 @@ router.post("/add", auth, uploadService, jsonParseBody, (req, res) => {
     newStore
       .save()
       .then((store) => {
-        s3.putObject(
-          {
-            Body: req.file.buffer,
-            Bucket: "blogbucket-dev-kevinrsd",
-            ContentType: `${mimetype}`,
-            Key: key,
-          },
-          (err, data) => {
-            res.json(store);
-          }
-        );
+       //Upload file -Firerbase
       })
       .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
   } else {
@@ -140,23 +130,9 @@ router.post("/id/:id/edit", auth, uploadService, jsonParseBody, (req, res) => {
         const oldImageUrl = store.photo;
         updates.photo = key;
         //Delete old image
-        s3.deleteObject(
-          {
-            Bucket: "blogbucket-dev-kevinrsd",
-            Key: oldImageUrl,
-          },
-          (err, data) => {}
-        );
+        
         //Upload new image from user
-        s3.putObject(
-          {
-            Body: req.file.buffer,
-            Bucket: "blogbucket-dev-kevinrsd",
-            ContentType: req.file.mimetype,
-            Key: key,
-          },
-          (err, data) => {}
-        );
+       
       }
       return Store.findOneAndUpdate({ _id: req.params.id }, updates, {
         new: true,

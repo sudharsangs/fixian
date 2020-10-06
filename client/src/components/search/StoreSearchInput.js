@@ -23,7 +23,7 @@ class StoreSearchInput extends Component {
           type="search"
           className="form-control"
           name="searchValue"
-          placeholder="Search for stores"
+          placeholder="Search for garages"
           value={this.state.searchValue}
           onChange={this.onChange}
           aria-label="Search"

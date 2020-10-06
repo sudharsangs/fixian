@@ -85,6 +85,7 @@ class StoreForm extends Component {
     this.setState({ tags });
   };
   onFileChange = (e) => {
+    console.log(e.target.files);
     this.setState({ file: e.target.files[0] });
   };
   render() {
@@ -139,7 +140,7 @@ class StoreForm extends Component {
         {/* img(src=`/uploads/${store.photo}`, alt=store.name width=200) */}
         <FileFieldGroup
           label="Photo"
-          onChange={this.onFileChange}
+          onChange={(e) => this.onFileChange(e)}
           accept="image/*"
         />
         {/* address, lng and lat */}

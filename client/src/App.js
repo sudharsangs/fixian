@@ -35,7 +35,7 @@ class App extends Component {
         {/* <Route exact path="/" component={Stores} /> */}
         <div className="container">
           <Switch>
-            <Route exact path="/" render={() => <Redirect to="/stores" />} />
+            <Route exact path="/" render={() => <Redirect to="/garages" />} />
             <GuestRoute exact path="/register" component={Register} />
             <GuestRoute exact path="/login" component={Login} />
             <PrivateRoute exact path="/profile" component={Profile} />

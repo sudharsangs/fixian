@@ -18,7 +18,7 @@ const storage = new Storage({
   keyFilename: keys.FIREBASE_KEY,
 });
 
-let bucketName = keys.FIREBASE_BUCKET_NAME;
+let bucketName = "gs://fixian-a8068.appspot.com";
 
 /*
 service firebase.storage {
@@ -103,6 +103,7 @@ router.get("/page/:page", (req, res) => {
 router.post("/add", auth, uploadService, jsonParseBody, (req, res) => {
   req.body.author = req.user._id;
   const newStore = new Store(req.body);
+  console.log(req.body);
   if (req.file) {
     const key = `${req.user.id}/${uuid()}`;
     newStore.photo = key;

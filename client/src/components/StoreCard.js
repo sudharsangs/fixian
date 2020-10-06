@@ -45,7 +45,7 @@ class StoreCard extends Component {
               <React.Fragment>
                 {storeData.author === userData.id ? (
                   <Link
-                    to={`/stores/${storeData._id}/edit`}
+                    to={`/garages/${storeData._id}/edit`}
                     className="text-white"
                     style={{ textDecoration: "none" }}
                   >

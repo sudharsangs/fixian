@@ -10,22 +10,22 @@ class EditStore extends Component {
   state = {
     name: "",
     description: "",
-    tags: []
+    tags: [],
   };
   componentDidMount() {
     this.props.getStore(this.props.match.params.id);
   }
 
-  onSubmit = store => {
+  onSubmit = (store) => {
     this.props
       .editStore(this.props.match.params.id, store)
       .then(() => {
         this.props.history.push({
-          pathname: `/stores`,
-          state: { edited: true }
+          pathname: `/garages`,
+          state: { edited: true },
         });
       })
-      .catch(e => {
+      .catch((e) => {
         toast.error(e[0].detail);
       });
   };
@@ -43,11 +43,8 @@ class EditStore extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { store: state.store };
 };
 
-export default connect(
-  mapStateToProps,
-  { getStore, editStore }
-)(EditStore);
+export default connect(mapStateToProps, { getStore, editStore })(EditStore);

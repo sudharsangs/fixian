@@ -7,10 +7,10 @@ const GuesteRoute = ({ component: Component, user, ...rest }) => {
   return (
     <Route
       {...rest} //exact, path, etc.
-      render={props => {
+      render={(props) => {
         //these props are match,history,location
         return isAuth === true ? (
-          <Redirect to="/stores" />
+          <Redirect to="/garages" />
         ) : (
           <Component {...props} />
         );
@@ -19,8 +19,8 @@ const GuesteRoute = ({ component: Component, user, ...rest }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 export default withRouter(connect(mapStateToProps)(GuesteRoute));

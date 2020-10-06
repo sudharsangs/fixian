@@ -3,18 +3,18 @@ import { withRouter } from "react-router-dom";
 
 class StoreSearchInput extends Component {
   state = {
-    searchValue: ""
+    searchValue: "",
   };
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     const { push } = this.props.history;
     const { searchValue } = this.state;
-    searchValue ? push(`/stores/${searchValue}/search`) : push("/stores");
+    searchValue ? push(`/garages/${searchValue}/search`) : push("/garages");
   };
   render() {
     return (

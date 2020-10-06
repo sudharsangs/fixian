@@ -6,7 +6,7 @@ const Pagination = ({ page, pages, count }) => {
     <div className="d-flex justify-content-around py-3 my-2 border-top border-bottom">
       {page > 1 ? (
         <Link
-          to={`/stores/page/${page - 1}`}
+          to={`/garages/page/${page - 1}`}
           style={{ textDecoration: "none" }}
         >
           <h6>⇠ Previous</h6>
@@ -17,7 +17,7 @@ const Pagination = ({ page, pages, count }) => {
       </h6>
       {page < pages ? (
         <Link
-          to={`/stores/page/${parseFloat(page) + 1}`}
+          to={`/garages/page/${parseFloat(page) + 1}`}
           style={{ textDecoration: "none" }}
         >
           <h6>Next ⇢</h6>

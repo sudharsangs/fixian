@@ -5,16 +5,16 @@ import { addStore } from "./../actions/storeActions";
 import StoreForm from "./StoreForm";
 
 class AddStore extends Component {
-  onSubmit = store => {
+  onSubmit = (store) => {
     this.props
       .addStore(store)
-      .then(store => {
+      .then((store) => {
         this.props.history.push({
-          pathname: `/stores`,
-          state: { added: true }
+          pathname: `/garages`,
+          state: { added: true },
         });
       })
-      .catch(e => {
+      .catch((e) => {
         toast.error(e[0].detail);
       });
   };
@@ -28,7 +28,4 @@ class AddStore extends Component {
   }
 }
 
-export default connect(
-  null,
-  { addStore }
-)(AddStore);
+export default connect(null, { addStore })(AddStore);

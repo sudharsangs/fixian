@@ -11,18 +11,15 @@ class HeartedStores extends Component {
     const { stores, loading } = this.props.store;
     return (
       <div>
-        <h1 className="text-center my-3">Hearted Stores</h1>
+        <h1 className="text-center my-3">Hearted Garages</h1>
         <Stores stores={stores} loading={loading} />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { store: state.store };
 };
 
-export default connect(
-  mapStateToProps,
-  { getStoresByHearts }
-)(HeartedStores);
+export default connect(mapStateToProps, { getStoresByHearts })(HeartedStores);

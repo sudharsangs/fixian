@@ -43,7 +43,7 @@ class App extends Component {
             <Route exact path="/top" component={TopStores} />
             <Route exact path="/tags" component={Tags} />
             <Route exact path="/tags/:tag" component={Tags} />
-            <Route exact path="/store/:slug" component={Store} />
+            <Route exact path="/garage/:slug" component={Store} />
             <PrivateRoute exact path="/add" component={AddStore} />
             <PrivateRoute
               exact

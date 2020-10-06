@@ -34,7 +34,7 @@ class StoreCard extends Component {
           {img}
           <div className="card-body">
             <h4>
-              <Link to={`/store/${storeData.slug}`}>{storeData.name}</Link>
+              <Link to={`/garage/${storeData.slug}`}>{storeData.name}</Link>
             </h4>
             <p className="card-text">
               {storeData.description.split(" ").slice(0, 25).join(" ")}

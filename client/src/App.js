@@ -45,12 +45,16 @@ class App extends Component {
             <Route exact path="/tags/:tag" component={Tags} />
             <Route exact path="/store/:slug" component={Store} />
             <PrivateRoute exact path="/add" component={AddStore} />
-            <PrivateRoute exact path="/stores/:id/edit" component={EditStore} />
-            <Route exact path="/stores" component={AllStores} />
-            <Route exact path="/stores/page/:page" component={AllStores} />
+            <PrivateRoute
+              exact
+              path="/garages/:id/edit"
+              component={EditStore}
+            />
+            <Route exact path="/garages" component={AllStores} />
+            <Route exact path="/garages/page/:page" component={AllStores} />
             <Route
               exact
-              path="/stores/:searchTerm/search"
+              path="/garages/:searchTerm/search"
               component={StoreSearchListing}
             />
             <Route path="/forgot_password" exact component={SendEmail} />
@@ -64,9 +68,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(
-  connect(
-    null,
-    { auth }
-  )(App)
-);
+export default withRouter(connect(null, { auth })(App));

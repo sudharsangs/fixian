@@ -26,7 +26,7 @@ class AllStores extends Component {
     const { stores, loading, page, pages, count } = this.props.store;
     return (
       <div>
-        <h1 className="text-center my-3">All Stores</h1>
+        <h1 className="text-center my-3">All Garages</h1>
         <Stores stores={stores} loading={loading} />
         <Pagination page={page} pages={pages} count={count} />
       </div>
@@ -34,13 +34,10 @@ class AllStores extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    store: state.store
+    store: state.store,
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { getStores }
-)(AllStores);
+export default connect(mapStateToProps, { getStores })(AllStores);

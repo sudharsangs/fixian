@@ -74,8 +74,8 @@ class Navbar extends Component {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/stores">
-                <i className="fas fa-store" /> Stores
+              <Link className="nav-link" to="/garages">
+                <i className="fas fa-store" /> Garages
               </Link>
             </li>
             <li className="nav-item">

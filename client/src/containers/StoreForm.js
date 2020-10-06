@@ -9,6 +9,7 @@ class StoreForm extends Component {
   state = {
     name: this.props.store ? this.props.store.name : "",
     description: this.props.store ? this.props.store.description : "",
+    mobile: this.props.store ? this.props.store.mobile : "",
     photo: this.props.store ? this.props.store.photo : "",
     tags: this.props.store ? this.props.store.tags : [],
     slug: this.props.store ? this.props.store.slug : "",
@@ -125,6 +126,14 @@ class StoreForm extends Component {
           name="description"
           onChange={this.onChange}
           value={this.state.description}
+        />
+        <TextFieldGroup
+          type="text"
+          label="Mobile"
+          name="mobile"
+          onChange={this.onChange}
+          value={this.state.mobile}
+          required
         />
         {storePhoto}
         {/* img(src=`/uploads/${store.photo}`, alt=store.name width=200) */}

@@ -17,7 +17,7 @@ const TopStoreRow = ({ store, index }) => {
       </td>
       <td>{index + 1}</td>
       <td>
-        <Link to={`/store/${store.slug}`}>{store.name}</Link>
+        <Link to={`/garage/${store.slug}`}>{store.name}</Link>
       </td>
       <td>{store.reviews.length}</td>
       <td>{`${store.averageRating && store.averageRating.toFixed(2)} / 5`}</td>

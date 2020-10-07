@@ -4,13 +4,16 @@ import TextFieldGroup from "./../components/common/TextFieldGroup";
 import TextAreaFieldGroup from "./../components/common/TextAreaFieldGroup";
 import FileFieldGroup from "./../components/common/FileFieldGroup";
 import { choices } from "./../utility/tags";
+import storage from "../Firebase/index";
 
 class StoreForm extends Component {
   state = {
     name: this.props.store ? this.props.store.name : "",
     description: this.props.store ? this.props.store.description : "",
     mobile: this.props.store ? this.props.store.mobile : "",
-    photo: this.props.store ? this.props.store.photo : "",
+    image: this.props.store ? this.props.store.image : "",
+    url: this.props.store ? this.props.store.url : "",
+    progress: this.props.store ? this.props.store.url : 0,
     tags: this.props.store ? this.props.store.tags : [],
     slug: this.props.store ? this.props.store.slug : "",
     location: this.props.store
@@ -20,6 +23,14 @@ class StoreForm extends Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
+    const { image } = this.state;
+
+    storage
+      .ref(`/covers/${image.name}`)
+      .getDownloadURL()
+      .then((url) => {
+        this.setState({ [url]: url });
+      });
     this.props.onSubmit(this.state);
   };
   onChange = (e) => {
@@ -85,8 +96,10 @@ class StoreForm extends Component {
     this.setState({ tags });
   };
   onFileChange = (e) => {
-    console.log(e.target.files);
-    this.setState({ file: e.target.files[0] });
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      this.setState(() => ({ image }));
+    }
   };
   render() {
     const tagChoices = choices.map((choice) => {
@@ -104,9 +117,9 @@ class StoreForm extends Component {
         </div>
       );
     });
-    const storePhoto = this.props.store && this.props.store.photo && (
+    const storePhoto = this.props.store && this.props.store.image && (
       <img
-        src={`${FirebaseUrl}${this.props.store.photo}`}
+        src={`${FirebaseUrl}${this.props.store.image}`}
         alt={this.props.store.name}
         width="200"
       />

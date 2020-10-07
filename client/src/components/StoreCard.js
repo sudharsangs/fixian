@@ -18,8 +18,8 @@ class StoreCard extends Component {
     const img = (
       <img
         src={
-          this.props.storeData.photo
-            ? `${FirebaseUrl}${this.props.storeData.photo}`
+          this.props.storeData.url
+            ? `${this.props.storeData.url}`
             : placeHolderImg
         }
         className="card-img-top"

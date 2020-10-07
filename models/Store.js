@@ -19,6 +19,12 @@ const storeSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    mobile: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",

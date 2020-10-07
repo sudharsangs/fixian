@@ -49,6 +49,7 @@ class Store extends Component {
           <h2>{store.name}</h2>
           <p>{store.location.address}</p>
           <p>{store.description}</p>
+          <p>{store.mobile}</p>
           {tags}
           {showReviewForm ? (
             <StoreReviewForm

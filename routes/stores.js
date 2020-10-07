@@ -104,30 +104,13 @@ router.post("/add", auth, uploadService, jsonParseBody, (req, res) => {
   req.body.author = req.user._id;
   const newStore = new Store(req.body);
   console.log(req.body);
-  if (req.file) {
-    const key = `${req.user.id}/${uuid()}`;
-    newStore.photo = key;
-    const { mimetype } = req.file;
-    newStore
-      .save()
-      .then((store) => {
-        //Upload file -Firebase
-        storage.bucket(bucketName).upload(req.file.buffer, {
-          gzip: true,
-          metadata: {
-            cacheControl: "public, max-age=31536000",
-          },
-        });
-      })
-      .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
-  } else {
-    newStore
-      .save()
-      .then((store) => {
-        res.json(store);
-      })
-      .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
-  }
+
+  newStore
+    .save()
+    .then((store) => {
+      res.json(store);
+    })
+    .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));
 });
 
 // @route   POST api/stores/id/:id/edit
@@ -142,20 +125,7 @@ router.post("/id/:id/edit", auth, uploadService, jsonParseBody, (req, res) => {
         });
       }
       let updates = req.body;
-      if (req.file) {
-        const key = `${req.user.id}/${uuid()}`;
-        const oldImageUrl = store.photo;
-        updates.photo = key;
-        //Delete old image
 
-        //Upload new image from user
-        storage.bucket(bucketName).upload(req.file.buffer, {
-          gzip: true,
-          metadata: {
-            cacheControl: "public, max-age=31536000",
-          },
-        });
-      }
       return Store.findOneAndUpdate({ _id: req.params.id }, updates, {
         new: true,
         runValidators: true,

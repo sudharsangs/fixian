@@ -221,24 +221,13 @@ router.get("/tags/:tag", (req, res) => {
 // @desc    Get the stores with search term in name OR description
 // @access  Public
 router.get("/search", (req, res) => {
-  Store.find(
-    {
-      $text: {
-        $search: req.query.q,
-      },
+  Store.find({
+    $text: {
+      $search: '"' + req.query.q + '"',
     },
-    {
-      //Here we are adding a new field called score
-      //Docs with more instances of coffee get higher score
-      score: { $meta: "textScore" },
-    }
-  )
-    .sort({
-      score: { $meta: "textScore" },
-    })
-    .limit(100)
-    .exec()
+  })
     .then((stores) => {
+      console.log(stores);
       res.json({ stores });
     })
     .catch((err) => res.status(422).json({ errors: normalizeErrors(err) }));

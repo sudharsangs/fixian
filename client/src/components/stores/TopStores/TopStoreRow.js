@@ -9,7 +9,7 @@ const TopStoreRow = ({ store, index }) => {
       <td>
         <Link to={`/store/${store.slug}`}>
           <img
-            src={store.photo ? `${FirebaseUrl}${store.photo}` : placeHolderImg}
+            src={store.url ? `${store.url}` : placeHolderImg}
             alt={store.name}
             style={{ width: "200px" }}
           />

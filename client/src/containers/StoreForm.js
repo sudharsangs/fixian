@@ -23,14 +23,14 @@ class StoreForm extends Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
-    const { image } = this.state;
+    // const { image } = this.state;
 
-    storage
-      .ref(`/covers/${image.name}`)
-      .getDownloadURL()
-      .then((url) => {
-        this.setState({ [url]: url });
-      });
+    // storage
+    //   .ref(`/covers/${image.name}`)
+    //   .getDownloadURL()
+    //   .then((url) => {
+    //     this.setState({ [url]: url });
+    //   });
     this.props.onSubmit(this.state);
   };
   onChange = (e) => {
@@ -99,6 +99,10 @@ class StoreForm extends Component {
     if (e.target.files[0]) {
       const image = e.target.files[0];
       this.setState(() => ({ image }));
+      this.setState({
+        url:
+          "https://images.unsplash.com/photo-1474408886716-087263db7da1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80",
+      });
     }
   };
   render() {

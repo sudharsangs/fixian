@@ -21,7 +21,7 @@ class AddStore extends Component {
   render() {
     return (
       <div>
-        <h1>Add Store</h1>
+        <h1>Add Garage</h1>
         <StoreForm onSubmit={this.onSubmit} />
       </div>
     );

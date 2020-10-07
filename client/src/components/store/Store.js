@@ -21,7 +21,7 @@ class Store extends Component {
     if (store) {
       const img = (
         <img
-          src={store.photo ? `${FirebaseUrl}${store.photo}` : placeHolderImg}
+          src={store.url ? `${store.url}` : placeHolderImg}
           className="img-fluid d-block mx-auto"
           alt=""
         />

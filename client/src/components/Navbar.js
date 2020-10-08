@@ -56,7 +56,7 @@ class Navbar extends Component {
       </React.Fragment>
     );
     return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-md navbar-dark bg-primary">
         <Link className="navbar-brand" to="/">
           Fixian
         </Link>
